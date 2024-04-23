@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import CalendarComponent from './components/Calendar';
 import Courses from './components/Courses';
 import Projects from './components/Projects';
-import Faq from './components/Faq'
+import Faqcomponent from './components/Faq'
 import Profile from './components/Profile';
 import Signup from './components/Signup';
 import './sass/styles.sass'
@@ -59,7 +59,7 @@ function App() {
 
         <Route
           path="/faq"
-          element={loggedIn ? <Faq /> : <Navigate replace to="/" />}
+          element={loggedIn ? <Faqcomponent /> : <Navigate replace to="/" />}
         ></Route>
 
         <Route
