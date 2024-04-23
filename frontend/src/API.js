@@ -61,3 +61,21 @@ export const getGrades = () => {
         {id: 6, name: 'CCNA 1', grade: 'A+', pass: true, enroll_date: 'March 25, 2024'},
     ]}
 }
+
+export const getEvents = () => {
+    //for calendar
+    return { success: true, msg:[
+        {
+          id: 1,
+          title: 'Event 1',
+          start: new Date(2024, 3, 25, 10, 0), // April 25, 2024, 10:00 AM
+          end: new Date(2024, 3, 25, 12, 0), // April 25, 2024, 12:00 PM
+        },
+        {
+          id: 2,
+          title: 'Event 2',
+          start: new Date(2024, 3, 26, 14, 0), // April 26, 2024, 2:00 PM
+          end: new Date(2024, 3, 26, 16, 0), // April 26, 2024, 4:00 PM
+        },
+      ]}
+}
