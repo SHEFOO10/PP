@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
+import { signup } from '../API.js';
+import { Link, useNavigate } from 'react-router-dom';
 
-function Signup({setLoggedIn}) {
+function Signup({ setLoggedIn }) {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    userType: '',
+    role: '',
+    gender: '', // New gender field
   });
+
+  const navigate = useNavigate();
 
   const [formErrors, setFormErrors] = useState({
     firstNameError: '',
@@ -18,7 +21,8 @@ function Signup({setLoggedIn}) {
     emailError: '',
     passwordError: '',
     confirmPasswordError: '',
-    userTypeError: '',
+    roleError: '',
+    genderError: '', // New genderError
   });
 
   const handleChange = (e) => {
@@ -39,7 +43,8 @@ function Signup({setLoggedIn}) {
       emailError: '',
       passwordError: '',
       confirmPasswordError: '',
-      userTypeError: '',
+      roleError: '',
+      genderError: '', // Reset genderError
     });
 
     let isValid = true;
@@ -107,18 +112,32 @@ function Signup({setLoggedIn}) {
       isValid = false;
     }
 
-    // User Type Validation
-    if (formData.userType === '') {
+    // Role Validation
+    if (formData.role === '') {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
-        userTypeError: 'Please select a user type',
+        roleError: 'Please select a user role',
+      }));
+      isValid = false;
+    }
+
+    // Gender Validation
+    if (formData.gender === '') {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        genderError: 'Please select a gender',
       }));
       isValid = false;
     }
 
     if (isValid) {
-      alert('sending to backend')
-      setLoggedIn(true)
+      const response = await signup(formData);
+      if (response.success) {
+        alert('Confirm your email then login to your account');
+        navigate('/');
+      } else {
+        alert(response.msg);
+      }
     }
   };
 
@@ -138,29 +157,63 @@ function Signup({setLoggedIn}) {
         </div>
         <div>
           <label htmlFor="email">Email:</label>
-          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange}  />
+          <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
           <span className="errorLabel">{formErrors.emailError}</span>
         </div>
         <div>
           <label htmlFor="password">Password:</label>
-          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange}  />
+          <input type="password" id="password" name="password" value={formData.password} onChange={handleChange} />
           <span className="errorLabel">{formErrors.passwordError}</span>
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
-          <input type="password" id="confirmPassword" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} />
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+          />
           <span className="errorLabel">{formErrors.confirmPasswordError}</span>
         </div>
         <div>
-          <label htmlFor="userType">User Type:</label>
-          <select id="userType" name="userType" value={formData.userType} onChange={handleChange}>
-            <option value="">Select User Type</option>
+          <label htmlFor="role">User Role:</label>
+          <select id="role" name="role" value={formData.role} onChange={handleChange}>
+            <option value="">Select User Role</option>
             <option value="instructor">Instructor</option>
             <option value="universityAdmin">University Admin</option>
             <option value="learner">Learner</option>
             <option value="student">Student</option>
           </select>
-          <span className="errorLabel">{formErrors.userTypeError}</span>
+          <span className="errorLabel">{formErrors.roleError}</span>
+        </div>
+        <div className='gender-container'>
+          <label htmlFor="gender">Gender:</label>
+            <div className='flex-row'>
+              <label className='flex-row'>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  checked={formData.gender === 'female'}
+                  onChange={handleChange}
+                />
+                Female
+              </label>
+            </div>
+            <div className='flex-row'>
+              <label className='flex-row'>
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  checked={formData.gender === 'male'}
+                  onChange={handleChange}
+                />
+                Male
+              </label>
+            </div>
+          <span className="errorLabel">{formErrors.genderError}</span>
         </div>
         <button type="submit">Sign Up</button>
       </form>

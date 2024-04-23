@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
-import { AiOutlineHome, AiOutlineUser, AiOutlineContacts, AiOutlineFileText, AiOutlineCalendar, AiOutlineQuestionCircle, AiOutlineMenu } from 'react-icons/ai';
+import { AiOutlineHome, AiOutlineUser, AiOutlineContacts, AiOutlineFileText, AiOutlineCalendar, AiOutlineQuestionCircle, AiOutlineMenu, AiOutlineSetting, AiOutlineCustomerService } from 'react-icons/ai';
 
-const SidebarComponent = ({setLoggedIn, userInfo}) => {
+const SidebarComponent = ({userInfo, handleLogout}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
@@ -44,16 +44,17 @@ const SidebarComponent = ({setLoggedIn, userInfo}) => {
               src="../../assets/profile.png"
             />
             <div className="user-name">
-              {userInfo.name}
+              {userInfo.first_name} {userInfo.last_name}
             </div>
-            <div className="User-title">
-              {userInfo.title}
+            <div className="user-role">
+              {userInfo.role}
             </div>
           </div>
         )}
 
 
         <div style={{ paddingLeft: isCollapsed ? undefined : "10%" }}>
+        {!isCollapsed &&<p className="title">Main Menu</p>}
           <Item
             title="Dashboard"
             to="/dashboard"
@@ -84,8 +85,19 @@ const SidebarComponent = ({setLoggedIn, userInfo}) => {
             to="/faq"
             icon={<AiOutlineQuestionCircle />}
           />
+          {!isCollapsed &&<p className="title">Settings</p>}
+          <Item
+            title="Settings"
+            to="/settings"
+            icon={<AiOutlineSetting />}
+          />
+          <Item
+            title="Support"
+            to="/support"
+            icon={<AiOutlineCustomerService />}
+          />
         </div>
-        {!isCollapsed && <button className='signout-btn' onClick={() => setLoggedIn(false)}>Signout</button>}
+        {!isCollapsed && <button className='signout-btn' onClick={() => handleLogout()}>Signout</button>}
         
       </Menu>
     </Sidebar>

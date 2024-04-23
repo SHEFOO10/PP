@@ -10,14 +10,36 @@ import Faq from './components/Faq'
 import Profile from './components/Profile';
 import Signup from './components/Signup';
 import './sass/styles.sass'
+import {getUser, logout} from './API'
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
-  const [userInfo, setUserInfo] = useState({name: 'Mariem Ehab', title: 'Software Engineer'})
+  const [userInfo, setUserInfo] = useState(null)
+
+  const handleLogout = async () => {
+    const response = await logout()
+    if (response.success){
+      setLoggedIn(false)
+      setUserInfo(null)
+    }
+  }
+
+  // runs when the user open application for the first time
+  useEffect(() => {
+    // check if user is logged in and fetch his info
+    const checkAuth = async () => {
+      const response = await getUser();
+      if (response.success){
+        setUserInfo(response.msg);
+        setLoggedIn(true);
+      }
+    };
+    checkAuth();
+  }, []);
 
   return (
     <div className="App">
       <BrowserRouter>
-      {loggedIn && <SidebarComponent setLoggedIn={setLoggedIn} userInfo={userInfo}/>}
+      {loggedIn && <SidebarComponent handleLogout={handleLogout} userInfo={userInfo}/>}
         <Routes>
         <Route
           path="/"
@@ -31,7 +53,7 @@ function App() {
 
         <Route
           path="/profile"
-          element={loggedIn ? <Profile /> : <Navigate replace to="/" />}
+          element={loggedIn ? <Profile userInfo={userInfo}/> : <Navigate replace to="/" />}
         ></Route>
 
         <Route

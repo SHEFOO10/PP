@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router for navigation
-
-const Login = ({setLoggedIn}) => {
+import { login } from '../API.js'
+const Login = ({setLoggedIn, setUserInfo}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     setEmailError('');
     setPasswordError('');
 
@@ -22,8 +22,15 @@ const Login = ({setLoggedIn}) => {
       return;
     }
     alert('send to backend')
-    setLoggedIn(true)
-    // Authentication logic can be added here...
+    const response = await login({email: email, password: password})
+
+    if (response.success){
+      setLoggedIn(true)
+      setUserInfo(response.msg)
+    } else {
+      alert(response.msg)
+    }
+    
   };
 
   return (
