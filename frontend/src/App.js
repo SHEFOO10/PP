@@ -3,7 +3,7 @@ import Login from './components/Login'
 import Dashboard from './components/Dashboard'
 import SidebarComponent from './components/Sidebar'
 import { useEffect, useState } from 'react'
-import Calendar from './components/Calendar';
+import CalendarComponent from './components/Calendar';
 import Courses from './components/Courses';
 import Projects from './components/Projects';
 import Faq from './components/Faq'
@@ -11,6 +11,7 @@ import Profile from './components/Profile';
 import Signup from './components/Signup';
 import './sass/styles.sass'
 import {getUser, logout} from './API'
+import "react-big-calendar/lib/css/react-big-calendar.css"
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
   const [userInfo, setUserInfo] = useState(null)
@@ -63,7 +64,7 @@ function App() {
 
         <Route
           path="/calendar"
-          element={loggedIn ? <Calendar /> : <Navigate replace to="/" />}
+          element={loggedIn ? <CalendarComponent /> : <Navigate replace to="/" />}
         ></Route>
 
         <Route
