@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,5 +14,11 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
+
+Route::apiResource('courses', CourseController::class);
+
+
+
 
 include __DIR__.'/auth.php';

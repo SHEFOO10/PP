@@ -4,7 +4,7 @@
     use App\Http\Controllers\AuthController;
     use App\Http\Controllers\VerificationController;
 
-    Route::middleware(['api'])->prefix('auth')->group(function () {
+    Route::middleware('api')->prefix('auth')->group(function () {
         Route::post('register', [AuthController::class, 'register']);
         Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);

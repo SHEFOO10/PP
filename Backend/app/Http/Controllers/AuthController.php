@@ -46,6 +46,7 @@ class AuthController extends Controller
     public function me()
     {
         # Here we just get information about current user
+        
         return response()->json(auth('api')->user());
     }
 
@@ -97,9 +98,12 @@ class AuthController extends Controller
 
         $request;
         $user = User::create([
-            'name' => $request->name,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => $request->password
+            'phone' => $request->phone,
+            'password' => $request->password,
+            'account_type' => $request->account_type
         ]);
         event(new Registered($user));
         return response()->json($user);
