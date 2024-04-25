@@ -47,7 +47,7 @@ const SidebarComponent = ({userInfo, handleLogout}) => {
               {userInfo.first_name} {userInfo.last_name}
             </div>
             <div className="user-role">
-              {userInfo.role}
+              {userInfo.account_type}
             </div>
           </div>
         )}

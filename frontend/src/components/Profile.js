@@ -25,7 +25,7 @@ function Profile({ userInfo }) {
             <div className='flex-row'>
               <div>
                 <h4>Role</h4>
-                <p>{userInfo.role}</p>
+                <p>{userInfo.account_type}</p>
               </div>
               <div>
                 <h4>Phone Number</h4>

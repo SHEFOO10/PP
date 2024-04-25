@@ -1,51 +1,73 @@
-export const login = (credintials) => {
-    // send user credintials to backend in a login request 
-    // return is simillar to getUser function
-    // credintials = {email: '...', password: '...'}
+import axios from 'axios';
+const baseURL = 'http://localhost:8000/api';
 
-    return {success: true, msg:{first_name: 'Mariem',
-    last_name: 'Ehab',
-    phone: '01553858484',
-    email: 'mariem.ehab234@gmail.com',
-    gender: 'Female',
-    role: 'Student'}}
-}
+export const login = async (credentials) => {
+    try {
+      const response = await axios.post(`${baseURL}/auth/login`, credentials);
+      return { success: true, msg: response.data };
+    } catch (error) {
+      if (error.response) {
+        return { success: false, msg: error.response.data };
+      } else if (error.request) {
+        return { success: false, msg: 'Error sending request to the server' };
+      } else {
+        return { success: false, msg: 'Unexpected error occurred' };
+      }
+    }
+};
 
-export const signup = (credintials) => {
-    // send user credintials to backend in a signup request 
-    // return {success: true, msg: ..} if signed up successfully
-    // return {success: false, msg: 'error msg'} otherwise
-    // credintials: {
-//     firstName: '',
-//     lastName: '',
-//     email: '',
-//     password: '',
-//     confirmPassword: '',
-//     role: '',
-//     gender: '',
-//     }
-    return {success: true, msg: null}
-}
+export const signup = async (credentials) => {
+    try {
+      const response = await axios.post(`${baseURL}/auth/register`, credentials);
+      return { success: true, msg: response.data };
+    } catch (error) {
+      if (error.response) {
+        return { success: false, msg: error.response.data };
+      } else if (error.request) {
+        return { success: false, msg: 'Error sending request to the server' };
+      } else {
+        return { success: false, msg: 'Unexpected error occurred' };
+      }
+    }
+};
 
-export const logout = () => {
-    // send a logout request
-    // return {success: true, msg: ''} successful
-    // return {success: false, msg: 'error msg'} otherwise
-    return {success: true, msg: null}
-}
+export const logout = async () => {
+    try {
+        const response = await axios.post(`${baseURL}/auth/logout`);
+        return { success: true, msg: response.data };
+    } catch (error) {
+        if (error.response) {
+        return { success: false, msg: error.response.data };
+        } else if (error.request) {
+        return { success: false, msg: 'Error sending request to the server' };
+        } else {
+        return { success: false, msg: 'Unexpected error occurred' };
+        }
+    }
+};
 
-export const getUser = () => {
-    // This will send a request to the backend to get user info if user is logged in
-    // return {success: true, msg: {first_name:'', last_name:'', phone:'', email:''}}
-    // return {sucess: false, msg: "error msg to be displayed"}
-
-    return {success: true, msg:{first_name: 'Mariem',
-            last_name: 'Ehab',
-            phone: '01553858484',
-            email: 'mariem.ehab234@gmail.com',
-            gender: 'Female',
-            role: 'Student'}}
-}
+export const getUser = async () => {
+    // for testing frontend
+    // return {success: true, 
+    //     msg:{first_name: 'Mariem',
+    //          last_name: 'Ehab',
+    //          phone: '01553858484',
+    //          email: 'mariem.ehab234@gmail.com',
+    //          gender: 'Female',
+    //          account_type: 'Student'}} 
+    try {
+      const response = await axios.post(`${baseURL}/auth/me`);
+      return { success: true, msg: response.data };
+    } catch (error) {
+      if (error.response) {
+        return { success: false, msg: error.response.data };
+      } else if (error.request) {
+        return { success: false, msg: 'Error sending request to the server' };
+      } else {
+        return { success: false, msg: 'Unexpected error occurred' };
+      }
+    }
+};
 
 export const getGrades = () => {
     // send a request to get all user courses grades (courses that he finished)

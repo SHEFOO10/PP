@@ -4,12 +4,13 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function Signup({ setLoggedIn }) {
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
+    phone: '', // Added phone field
     password: '',
     confirmPassword: '',
-    role: '',
+    account_type: '',
     gender: '', // New gender field
   });
 
@@ -19,6 +20,7 @@ function Signup({ setLoggedIn }) {
     firstNameError: '',
     lastNameError: '',
     emailError: '',
+    phoneError: '', // Added phoneError
     passwordError: '',
     confirmPasswordError: '',
     roleError: '',
@@ -41,6 +43,7 @@ function Signup({ setLoggedIn }) {
       firstNameError: '',
       lastNameError: '',
       emailError: '',
+      phoneError: '', // Reset phoneError
       passwordError: '',
       confirmPasswordError: '',
       roleError: '',
@@ -50,7 +53,7 @@ function Signup({ setLoggedIn }) {
     let isValid = true;
 
     // First Name Validation
-    if (formData.firstName.trim() === '') {
+    if (formData.first_name.trim() === '') {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         firstNameError: 'Please enter your first name',
@@ -59,7 +62,7 @@ function Signup({ setLoggedIn }) {
     }
 
     // Last Name Validation
-    if (formData.lastName.trim() === '') {
+    if (formData.last_name.trim() === '') {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         lastNameError: 'Please enter your last name',
@@ -78,6 +81,21 @@ function Signup({ setLoggedIn }) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         emailError: 'Please enter a valid email',
+      }));
+      isValid = false;
+    }
+
+    // Phone Validation
+    if (formData.phone.trim() === '') {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phoneError: 'Please enter your phone number',
+      }));
+      isValid = false;
+    } else if (!/^\+?\d{10,}$/i.test(formData.phone)) {
+      setFormErrors((prevErrors) => ({
+        ...prevErrors,
+        phoneError: 'Please enter a valid phone number',
       }));
       isValid = false;
     }
@@ -113,7 +131,7 @@ function Signup({ setLoggedIn }) {
     }
 
     // Role Validation
-    if (formData.role === '') {
+    if (formData.account_type === '') {
       setFormErrors((prevErrors) => ({
         ...prevErrors,
         roleError: 'Please select a user role',
@@ -134,6 +152,7 @@ function Signup({ setLoggedIn }) {
       const response = await signup(formData);
       if (response.success) {
         alert('Confirm your email then login to your account');
+        console.log(formData)
         navigate('/');
       } else {
         alert(response.msg);
@@ -147,18 +166,23 @@ function Signup({ setLoggedIn }) {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="firstName">First Name:</label>
-          <input type="text" id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+          <input type="text" id="firstName" name="first_name" value={formData.first_name} onChange={handleChange} />
           <span className="errorLabel">{formErrors.firstNameError}</span>
         </div>
         <div>
           <label htmlFor="lastName">Last Name:</label>
-          <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+          <input type="text" id="lastName" name="last_name" value={formData.last_name} onChange={handleChange} />
           <span className="errorLabel">{formErrors.lastNameError}</span>
         </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
           <span className="errorLabel">{formErrors.emailError}</span>
+        </div>
+        <div>
+          <label htmlFor="phone">Phone:</label>
+          <input type="text" id="phone" name="phone" value={formData.phone} onChange={handleChange} />
+          <span className="errorLabel">{formErrors.phoneError}</span>
         </div>
         <div>
           <label htmlFor="password">Password:</label>
@@ -178,7 +202,7 @@ function Signup({ setLoggedIn }) {
         </div>
         <div>
           <label htmlFor="role">User Role:</label>
-          <select id="role" name="role" value={formData.role} onChange={handleChange}>
+          <select id="role" name="account_type" value={formData.account_type} onChange={handleChange}>
             <option value="">Select User Role</option>
             <option value="instructor">Instructor</option>
             <option value="universityAdmin">University Admin</option>
