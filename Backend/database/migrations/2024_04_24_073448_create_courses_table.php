@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('category');
+            $table->integer('duration')->nullable();
             $table->foreignId('instructor_id')->constrained('users');
             $table->timestamps();
         });

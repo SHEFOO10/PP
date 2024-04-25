@@ -15,4 +15,24 @@ class Course extends Model
         'category',
         'instructor_id',
     ];
+
+    public function instructor()
+    {
+        return $this->belongsTo(User::class, 'instructor_id');
+    }
+
+    public function materials()
+    {
+        return $this->hasMany(CourseMaterial::class);
+    }
+    // Accessor method to convert duration from minutes to hours and minutes
+    public function getDurationHoursAttribute()
+    {
+        return floor($this->duration / 60); // Get hours
+    }
+
+    public function getDurationMinutesAttribute()
+    {
+        return $this->duration % 60; // Get remaining minutes
+    }
 }
