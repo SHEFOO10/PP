@@ -34,7 +34,7 @@ const Login = ({setLoggedIn, setUserInfo}) => {
   };
 
   return (
-    <div className="SignupContainer">
+    <div className="loginContainer">
       <h2>Login</h2>
       <form className="LoginForm">
         <div className="inputContainer">
@@ -44,7 +44,6 @@ const Login = ({setLoggedIn, setUserInfo}) => {
             id="email"
             name="email"
             value={email}
-            placeholder="Enter your email"
             onChange={(e) => setEmail(e.target.value)}
             className="inputField"
           />
@@ -57,7 +56,6 @@ const Login = ({setLoggedIn, setUserInfo}) => {
             id="password"
             name="password"
             value={password}
-            placeholder="Enter your password"
             onChange={(e) => setPassword(e.target.value)}
             className="inputField"
           />
