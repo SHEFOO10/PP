@@ -77,6 +77,7 @@ function Signup({ setLoggedIn }) {
         emailError: 'Please enter your email',
       }));
       isValid = false;
+      // eslint-disable-next-line
     } else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(formData.email)) {
       setFormErrors((prevErrors) => ({
         ...prevErrors,

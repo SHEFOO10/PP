@@ -11,7 +11,7 @@ class UpdateCourseMaterialRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,24 @@ class UpdateCourseMaterialRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'sometimes|string',
+            'description' => 'sometimes|string',
+            'content' => 'sometimes|string',
+            'file_path' => 'sometimes|string',
+            'duration' => 'sometimes|integer',
+            'order' => 'sometimes|integer',
+            'is_published' => 'sometimes|boolean',
         ];
+
+        // return [
+        //     'type' => 'sometimes|string',
+        //     'title' => 'sometimes|string',
+        //     'description' => 'sometimes|string',
+        //     'content' => 'sometimes|string',
+        //     'file_path' => 'sometimes|string',
+        //     'duration' => 'sometimes|integer',
+        //     'order' => 'sometimes|integer',
+        //     'is_published' => 'sometimes|boolean',
+        // ];
     }
 }

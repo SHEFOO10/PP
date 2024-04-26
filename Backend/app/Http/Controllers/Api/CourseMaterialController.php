@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreCourseMaterialRequest;
+use App\Http\Requests\UpdateCourseMaterialRequest;
 use App\Http\Resources\CourseMaterialResource;
 use App\Http\Resources\CourseResource;
 use App\Models\Course;
@@ -41,9 +42,10 @@ class CourseMaterialController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course, CourseMaterial $course_material)
+    public function update(UpdateCourseMaterialRequest $request, Course $course, CourseMaterial $course_material)
     {
-        return true;
+        $course_material->update($request->validated());
+        return $course_material;
     }
 
     /**
